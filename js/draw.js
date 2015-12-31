@@ -20,21 +20,23 @@ function createBackground()
 				imagesrc="img/chipset/wall.png";
 			else
 				imagesrc="img/chipset/grass.png";
-			tile = new Unit(imagesrc,centerx-j*tilewidth-tilewidth,centery-i*tileheight-tileheight,32,32,"tile");
+			tile = new Unit(imagesrc,centerx-j*tilewidth-tilewidth,centery-i*tileheight-tileheight,0,32,32,"tile");
 			units.push(tile);
 			
 		}
 		
 	}
 	
+	
 }
 
-function Unit(filepath,posX,posY,width,height,type)
+function Unit(filepath,posX,posY,posZ,width,height,type)
 {
 	var _unitReady = false;
 	var _unitImage = new Image();
 	var _posX = posX;
 	var _posY = posY;
+	var _posZ = posZ;
 	var _width = width;
 	var _height = height;
 	var _imageCropCoordinates = [];
@@ -65,6 +67,18 @@ function Unit(filepath,posX,posY,width,height,type)
 	{
 		return _posY;
 		
+	}	
+	
+	this.getPosZ=function()
+	{
+		return _posZ;
+		
+	}
+	
+	this.setPosZ=function(posZ)
+	{
+		_posZ=posZ;
+		
 	}
 	
 	this.getImage=function()
@@ -77,6 +91,11 @@ function Unit(filepath,posX,posY,width,height,type)
 	{
 		return _imageCropCoordinates;
 		
+	}
+	
+	this.getType=function()
+	{
+		return _type;
 	}
 	
 	this.isType=function(type)
@@ -133,6 +152,18 @@ function Unit(filepath,posX,posY,width,height,type)
 
 	}
 	
+	this.draw=function()
+	{
+		var sx = _imageCropCoordinates[0]; // cropping coordinates for Image
+		var sy = _imageCropCoordinates[1]; // sx, sy: x,y coordinates of Image cropping start
+		var sw = _imageCropCoordinates[2]; // sw, sh: width and height of cropped Image
+		var sh = _imageCropCoordinates[3];
+		ctx.drawImage(_unitImage,sx,sy,sw,sh,centerx+_posX,centery+_posY,sw,sh);
+		
+	}
+	
+	
+	
 }
 
 // Draw everything
@@ -141,13 +172,16 @@ function render()
 	for (var i=0; i<units.length; i++)
 	{
 		var unit=units[i];
+		
 		if (unit.isReady())
 		{
-			var sx = unit.getImageCropCoordinates()[0]; // cropping coordinates for Image
-			var sy = unit.getImageCropCoordinates()[1]; // sx, sy: x,y coordinates of Image cropping start
-			var sw = unit.getImageCropCoordinates()[2]; // sw, sh: width and height of cropped Image
-			var sh = unit.getImageCropCoordinates()[3];
-			ctx.drawImage(unit.getImage(),sx,sy,sw,sh,centerx+unit.getPosX(),centery+unit.getPosY(),sw,sh);
+			if (unit.isType("background"))
+			{
+				ctx.drawImage(unit.getImage(),0,0);
+			}			
+			else
+				unit.draw();
+				
 
 		}
 	}

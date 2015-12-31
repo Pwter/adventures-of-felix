@@ -8,7 +8,7 @@ var centerx=width/2;
 var centery=height/2;
 
 var gameframe=0;
-var debuginfo;
+var debuginfo="";
 
 // wrapper set up
 document.getElementById("wrapper").style.width=width;
@@ -118,11 +118,19 @@ var then = Date.now();
 
 function game_init()
 {
-	createCanvas();
-	createBackground();
 	hero = new Hero();
-	felix = new Unit("img/charset/felix.png",0-24,0-32,48,64,"hero");
+	
+	createCanvas();
+	
+	createBackground();
+	
+	background = new Unit("img/background.jpg",0,0,-1000,width,height,"background");
+	units.push(background);
+	
+	felix = new Unit("img/charset/felix.png",0-24,0-32,1000,48,64,"hero");
 	units.push(felix);
 	
+	sortUnitsByZindex();
+
 	main();
 }

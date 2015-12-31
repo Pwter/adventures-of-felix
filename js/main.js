@@ -7,7 +7,8 @@ var tileheight=32;
 var centerx=width/2;
 var centery=height/2;
 
-var herospeed=3;
+var gameframe=0;
+var debuginfo;
 
 // wrapper set up
 document.getElementById("wrapper").style.width=width;
@@ -51,18 +52,17 @@ function move(direction)
 			
 		};
 	
-	document.title=modifierx+ " "+modifiery;
-	
 	for (var i=0; i<units.length; i++)
 	{
 		if (!units[i].isType("hero"))
 		{
-			units[i].changePos(modifierx*herospeed,modifiery*herospeed);
+			units[i].changePos(modifierx*hero.getHeroSpeed(),modifiery*hero.getHeroSpeed());
 			
 		}
 		else
 		{
 			units[i].setDirection(direction);
+			units[i].inMove();
 			
 		}
 		
@@ -71,19 +71,23 @@ function move(direction)
 }
 
 // Update game objects
-var update = function (modifier) 
+var update = function () 
 {
 	if (38 in keysDown || 87 in keysDown) { // Player holding up or w
 		move("up");
+		
 	}
 	if (40 in keysDown || 83 in keysDown) { // Player holding down or s
 		move("down");
+		
 	}
 	if (37 in keysDown || 65 in keysDown) { // Player holding left or a
 		move("left");
+		
 	}
 	if (39 in keysDown || 68 in keysDown) { // Player holding right or d
 		move("right");
+		
 	}
 
 
@@ -92,12 +96,13 @@ var update = function (modifier)
 // The main game loop
 var main = function () 
 {
-	var now = Date.now();
+	now = Date.now();
 	var delta = now - then;
 
-	update(delta / 1000);
+	update(delta/1000);
 	render();
-
+	gameframe++;
+	if (gameframe>40) gameframe=1;
 	then = now;
 
 	// Request to do this again ASAP
@@ -115,8 +120,9 @@ function game_init()
 {
 	createCanvas();
 	createBackground();
-	hero = new Unit("img/charset/felix1.png",0-24,0-32,"hero");
-	units.push(hero);
+	hero = new Hero();
+	felix = new Unit("img/charset/felix.png",0-24,0-32,48,64,"hero");
+	units.push(felix);
 	
 	main();
 }

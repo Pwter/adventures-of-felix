@@ -5,25 +5,33 @@ function createCanvas()
 	this.ctx = canvas.getContext("2d");
 	canvas.width = width;
 	canvas.height = height;
-	canvas.addEventListener('mousemove', mousecoordinates, false);
-	canvas.addEventListener('click', mouseclick, false);
+	canvas.addEventListener('mousemove', mouseMove, false);
+	canvas.addEventListener('click', mouseClick, false);
+	canvas.addEventListener('mouseout', mouseOut, false);
 	document.getElementById("wrapper").appendChild(canvas);
 		
 }
 
-var mousePosX=0;
-var mousePosY=0;
+var mousePosX=-1;
+var mousePosY=-1;
 
-function mousecoordinates(ev) 
+function mouseMove(ev) 
 {
-   mousePosX = ev.clientX - canvas.offsetLeft;
-   mousePosY = ev.clientY - canvas.offsetTop;
-
+	mousePosX = ev.clientX - canvas.offsetLeft;
+	mousePosY = ev.clientY - canvas.offsetTop;
+	
 }
 
-function mouseclick(ev)
+function mouseClick(ev)
 {
 	alert("You clicked at: "+mousePosX+","+mousePosY);
+	
+}
+
+function mouseOut(ev)
+{
+	mousePosX = -1;
+	mousePosY = -1;
 	
 }
 

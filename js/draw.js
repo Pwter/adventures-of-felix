@@ -5,8 +5,26 @@ function createCanvas()
 	this.ctx = canvas.getContext("2d");
 	canvas.width = width;
 	canvas.height = height;
+	canvas.addEventListener('mousemove', mousecoordinates, false);
+	canvas.addEventListener('click', mouseclick, false);
 	document.getElementById("wrapper").appendChild(canvas);
 		
+}
+
+var mousePosX=0;
+var mousePosY=0;
+
+function mousecoordinates(ev) 
+{
+   mousePosX = ev.clientX - canvas.offsetLeft;
+   mousePosY = ev.clientY - canvas.offsetTop;
+
+}
+
+function mouseclick(ev)
+{
+	alert("You clicked at: "+mousePosX+","+mousePosY);
+	
 }
 
 // Draw everything
@@ -27,8 +45,11 @@ function render()
 				
 
 		}
+		
 	}
-
+	
+	debuginfo=mousePosX+","+mousePosY;
+	
 	// Score
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "24px Helvetica";

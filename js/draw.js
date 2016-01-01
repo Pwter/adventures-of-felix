@@ -173,6 +173,13 @@ function Unit(filepath,posX,posY,posZ,width,height,type)
 	
 	this.draw=function()
 	{
+		if (_type=="hero" && 
+			!( (38 in keysDown || 87 in keysDown)
+			|| (40 in keysDown || 83 in keysDown)
+			|| (37 in keysDown || 65 in keysDown)
+			|| (39 in keysDown || 68 in keysDown)))
+			_imageCropCoordinates[0]=_width;
+		
 		var sx = _imageCropCoordinates[0]; // cropping coordinates for Image
 		var sy = _imageCropCoordinates[1]; // sx, sy: x,y coordinates of Image cropping start
 		var sw = _imageCropCoordinates[2]; // sw, sh: width and height of cropped Image

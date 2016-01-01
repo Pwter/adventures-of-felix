@@ -16,11 +16,18 @@ function createBackground()
 		for (var j=0; j<width/tilewidth; j++)
 		{
 			var imagesrc;
+			var imagetype;
 			if (i==0 || i==height/tileheight-1 || j==0 || j==width/tilewidth-1) 
+			{
 				imagesrc="img/chipset/wall.png";
+				imagetype="wall";
+			}
 			else
+			{
 				imagesrc="img/chipset/grass.png";
-			tile = new Unit(imagesrc,centerx-j*tilewidth-tilewidth,centery-i*tileheight-tileheight,0,32,32,"tile");
+				imagetype="tile";
+			}
+			tile = new Unit(imagesrc,centerx-j*tilewidth-tilewidth/2,centery-i*tileheight-tileheight/2,0,32,32,imagetype);
 			units.push(tile);
 			
 		}
@@ -57,6 +64,18 @@ function Unit(filepath,posX,posY,posZ,width,height,type)
 		
 	}
 	
+	this.getWidth=function()
+	{
+		return _width;
+		
+	}
+	
+	this.getHeight=function()
+	{
+		return _height;
+		
+	}
+	
 	this.getPosX=function()
 	{
 		return _posX;
@@ -67,7 +86,7 @@ function Unit(filepath,posX,posY,posZ,width,height,type)
 	{
 		return _posY;
 		
-	}	
+	}
 	
 	this.getPosZ=function()
 	{
@@ -158,7 +177,7 @@ function Unit(filepath,posX,posY,posZ,width,height,type)
 		var sy = _imageCropCoordinates[1]; // sx, sy: x,y coordinates of Image cropping start
 		var sw = _imageCropCoordinates[2]; // sw, sh: width and height of cropped Image
 		var sh = _imageCropCoordinates[3];
-		ctx.drawImage(_unitImage,sx,sy,sw,sh,centerx+_posX,centery+_posY,sw,sh);
+		ctx.drawImage(_unitImage,sx,sy,sw,sh,centerx+_posX-_width/2,centery+_posY-height/2,sw,sh);
 		
 	}
 	

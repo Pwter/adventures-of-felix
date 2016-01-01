@@ -38,36 +38,88 @@ function move(direction)
 	switch (direction)
 		{
 			case "left":
-				modifierx=1;
+				modifierx=1*hero.getHeroSpeed();
 				break;
 			case "right":
-				modifierx=-1;
+				modifierx=-1*hero.getHeroSpeed();
 				break;
 			case "up":
-				modifiery=1;
+				modifiery=1*hero.getHeroSpeed();
 				break;
 			case "down":
-				modifiery=-1;
+				modifiery=-1*hero.getHeroSpeed();
 				break;
 			
 		};
+		
+	if (!moveAllowed(modifierx,modifiery))
+		return false;
 	
 	for (var i=0; i<units.length; i++)
 	{
-		if (!units[i].isType("hero"))
-		{
-			units[i].changePos(modifierx*hero.getHeroSpeed(),modifiery*hero.getHeroSpeed());
-			
-		}
-		else
+		if (units[i].isType("hero"))
 		{
 			units[i].setDirection(direction);
 			units[i].inMove();
 			
 		}
+		else
+		{
+			units[i].changePos(modifierx,modifiery);
+			
+			
+		}
 		
 	}
 	
+}
+
+// Cheking if move is collides with wall or not
+function moveAllowed(modifierx,modifiery)
+{
+	var heroposx;
+	var heroposy;
+	
+	for (var i=0; i<units.length; i++)
+	{
+		if (units[i].isType("hero"))
+		{
+			heroposx = units[i].getPosX();
+			heroposy = units[i].getPosY();
+		}
+		
+	}
+	
+
+	var herowidth = hero.getHeroSize()[0];
+	var heroheight = hero.getHeroSize()[1];
+	
+	for (var i=0; i<units.length; i++)
+	{
+		
+		var unit=units[i];
+		if (unit.isReady() && !unit.isType("hero") && !unit.isType("background") && unit.isType("wall"))
+		{
+			unitposx = unit.getPosX();
+			unitposy = unit.getPosY();
+			unitwidth = unit.getWidth();
+			unitheight = unit.getHeight();
+			
+			if (unitposx + unitwidth/2 > heroposx - herowidth/2 - modifierx
+				&& unitposy + unitheight/2 > heroposy - heroheight/2 - modifiery
+				&& unitposx - unitwidth/2 < heroposx + herowidth/2 - modifierx
+				&&unitposy - unitheight/2 < heroposy + heroheight/2 - modifiery
+			)
+			{
+				return false;
+				
+			}
+			
+		}
+		
+	}
+	
+	return true;
 }
 
 // Update game objects
@@ -118,17 +170,20 @@ var then = Date.now();
 
 function game_init()
 {
-	hero = new Hero();
-	
 	createCanvas();
 	
+	hero = new Hero();
+	
+	var width=hero.getHeroSize()[0];
+	var height=hero.getHeroSize()[1];
+	
+	felix = new Unit("img/charset/felix.png",0-width/4,0-height/4,1000,width,height,"hero");
+	units.push(felix);
+
 	createBackground();
 	
 	background = new Unit("img/background.png",0,0,-1000,width,height,"background");
 	units.push(background);
-	
-	felix = new Unit("img/charset/felix.png",0-24,0-32,1000,48,64,"hero");
-	units.push(felix);
 	
 	sortUnitsByZindex();
 

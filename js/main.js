@@ -124,7 +124,7 @@ function game_init()
 	
 	createBackground();
 	
-	background = new Unit("img/background.jpg",0,0,-1000,width,height,"background");
+	background = new Unit("img/background.png",0,0,-1000,width,height,"background");
 	units.push(background);
 	
 	felix = new Unit("img/charset/felix.png",0-24,0-32,1000,48,64,"hero");

@@ -142,17 +142,27 @@ function addMap(layer)
 	var tileheight=map[3];
 	var centerx=-tilewidth/2*map[0];
 	var centery=-tileheight/2*map[1];
+	
+	var layer = document.createElement("canvas");
+	var layerctx = layer.getContext("2d");
+	
 	for (var i=0; i < map[1]; i++)
 	{
 		for (var j=0; j < map[0]; j++)
 		{
 			if (map[k]!=-1)
 			{
+				
 				var zindex = map[4][map[k]][0];
 				var imagesrc = map[4][map[k]][1];
 				var imagetype = map[4][map[k]][2];
 				tile = new Unit(imagesrc,centerx+j*tilewidth+tilewidth/2,centery+i*tileheight+tileheight/2,zindex,tilewidth,tileheight,imagetype);
 				units.push(tile);
+				
+				var theimage=new Image();
+				theimage.src=imagesrc;
+				
+				//layerctx.drawImage(theimage,centerx+j*tilewidth+tilewidth/2,centery+i*tileheight+tileheight/2);
 			}
 			k++;
 			
@@ -160,4 +170,5 @@ function addMap(layer)
 		
 	}
 	
+	//return layerctx;
 }		

@@ -56,6 +56,8 @@ function render()
 		
 	}
 	
+	//ctx.drawImage(tilelayer,0,0);
+	
 	debuginfo=mousePosX+","+mousePosY;
 	
 	// Score
@@ -64,6 +66,7 @@ function render()
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
 	ctx.fillText(debuginfo, 32, 32);
+	
 };
 
 

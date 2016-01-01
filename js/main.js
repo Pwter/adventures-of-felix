@@ -105,10 +105,10 @@ function moveAllowed(modifierx,modifiery)
 			unitwidth = unit.getWidth();
 			unitheight = unit.getHeight();
 			
-			if (unitposx + unitwidth/2 > heroposx - herowidth/2 - modifierx
-				&& unitposy + unitheight/2 > heroposy - heroheight/2 - modifiery
-				&& unitposx - unitwidth/2 < heroposx + herowidth/2 - modifierx
-				&&unitposy - unitheight/2 < heroposy + heroheight/2 - modifiery
+			if (unitposx + unitwidth/2 > heroposx - herowidth/2 - modifierx +8 // hero hitbox fix hero left
+				&& unitposy + unitheight/2 > heroposy - heroheight/2 - modifiery + 14 //hero top
+				&& unitposx - unitwidth/2 < heroposx + herowidth/2 - modifierx - 8 // hero right
+				&&unitposy - unitheight/2 < heroposy + heroheight/2 - modifiery // hero bottom
 			)
 			{
 				return false;
@@ -180,7 +180,8 @@ function game_init()
 	felix = new Unit("img/charset/felix.png",0-width/4,0-height/4,1000,width,height,"hero");
 	units.push(felix);
 
-	addMap();
+	addMap(0);
+	addMap(1);
 	
 	background = new Unit("img/background.png",0,0,-1000,width,height,"background");
 	units.push(background);

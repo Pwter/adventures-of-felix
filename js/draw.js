@@ -24,7 +24,7 @@ function mouseMove(ev)
 
 function mouseClick(ev)
 {
-	alert("You clicked at: "+mousePosX+","+mousePosY);
+	//
 	
 }
 

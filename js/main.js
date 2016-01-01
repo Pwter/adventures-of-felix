@@ -182,6 +182,7 @@ function game_init()
 
 	addMap(0);
 	addMap(1);
+	addMap(2);
 	
 	background = new Unit("img/background.png",0,0,-1000,width,height,"background");
 	units.push(background);

@@ -9,34 +9,6 @@ function createCanvas()
 		
 }
 
-function createBackground()
-{
-	for (var i=0; i<height/tileheight; i++)
-	{
-		for (var j=0; j<width/tilewidth; j++)
-		{
-			var imagesrc;
-			var imagetype;
-			if (i==0 || i==height/tileheight-1 || j==0 || j==width/tilewidth-1) 
-			{
-				imagesrc="img/chipset/wall.png";
-				imagetype="wall";
-			}
-			else
-			{
-				imagesrc="img/chipset/grass.png";
-				imagetype="tile";
-			}
-			tile = new Unit(imagesrc,centerx-j*tilewidth-tilewidth/2,centery-i*tileheight-tileheight/2,0,32,32,imagetype);
-			units.push(tile);
-			
-		}
-		
-	}
-	
-	
-}
-
 function Unit(filepath,posX,posY,posZ,width,height,type)
 {
 	var _unitReady = false;

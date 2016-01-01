@@ -180,7 +180,7 @@ function game_init()
 	felix = new Unit("img/charset/felix.png",0-width/4,0-height/4,1000,width,height,"hero");
 	units.push(felix);
 
-	createBackground();
+	addMap();
 	
 	background = new Unit("img/background.png",0,0,-1000,width,height,"background");
 	units.push(background);
